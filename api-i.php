@@ -8,46 +8,46 @@
     $dbName = “chatbot”;
     $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die(“connect error” . mysqli_error());
     mysqli_set_charset($connect, “utf8”);*/
-    $API_URL = ‘https://api.line.me/v2/bot/message/reply';
-    $ACCESS_TOKEN = ‘AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU=’; // Access Token จาก Line developer
-    $POST_HEADER = array(‘Content-Type: application/json’, ‘Authorization: Bearer line_token’);
+    $API_URL = 'https://api.line.me/v2/bot/message/reply';
+    $ACCESS_TOKEN = 'AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
+    $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer line_token');
     $request = file_get_contents(‘php://input’);
     $request_array = json_decode($request, true);
-    if (sizeof($request_array[‘events’]) > 0) {
-    foreach ($request_array[‘events’] as $event) {
-    $reply_message = ‘’;
-    $reply_token = $event[‘replyToken’];
-    $user_id = $event[‘source’][‘userId’];
-    if ($event[‘type’] == ‘message’) {
+    if (sizeof($request_array['events']) > 0) {
+    foreach ($request_array['events'] as $event) {
+    $reply_message = '';
+    $reply_token = $event['replyToken'];
+    $user_id = $event['source']['userId'];
+    if ($event['type'] == 'message') {
     $opts = [
-    “http” => [
-    “header” => “Content-Type: application/json\r\n” . ‘Authorization: Bearer line_token’,
+    "http" => [
+    "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer line_token',
     ],
   ];
 }
 $context = stream_context_create($opts);
-$profile_json = file_get_contents(‘https://api.line.me/v2/bot/profile/' . $user_id, false, $context);
+$profile_json = file_get_contents('https://api.line.me/v2/bot/profile/' . $user_id, false, $context);
 $profile_array = json_decode($profile_json, true);
 $pic_ = $profile_array[pictureUrl];
 $name_ = $profile_array[displayName];
 {
-    if ($event[‘message’][‘type’] == ‘text’) {
-    $text = $event[‘message’][‘text’];
-    $userid = $event[‘source’][‘userId’];
+    if ($event['message']['type'] == 'text') {
+    $text = $event['message']['text'];
+    $userid = $event['source']['userId'];
     /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
     $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
     fwrite($myfile, $log);
     fclose($myfile); */
     /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
     $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
-    $url = “https://bots.dialogflow.com/line/ad06ac8974cd430a92915c843b49c0e3/webhook";
+    $url = "https://bots.dialogflow.com/line/ad06ac8974cd430a92915c843b49c0e3/webhook";
     $headers = getallheaders();
-    $headers[‘Host’] = “bots.dialogflow.com”;
+    $headers['Host'] = "bots.dialogflow.com";
     $json_headers = array();
     foreach ($headers as $k => $v) {
-    $json_headers[] = $k . “:” . $v;
+    $json_headers[] = $k . ":" . $v;
     }
-      $inputJSON = file_get_contents(‘php://input’);
+      $inputJSON = file_get_contents('php://input');
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_POST, 1);
@@ -62,21 +62,21 @@ $name_ = $profile_array[displayName];
       curl_close($ch);
       exit;
       } else {
-        $text =”user send image location or sticker”;
+        $text ="user send image location or sticker";
         /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
         $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
         fwrite($myfile, $log);
         fclose($myfile); */
         /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
         $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
-        $url = “https://abdul.in.th/callback/2e31437050351d49f8befaa04ed296ed.php";
+        $url = "https://abdul.in.th/callback/2e31437050351d49f8befaa04ed296ed.php";
         $headers = getallheaders();
-        $headers[‘Host’] = “abdul.in.th”;
+        $headers['Host'] = "abdul.in.th";
         $json_headers = array();
         foreach ($headers as $k => $v) {
-        $json_headers[] = $k . “:” . $v;
+        $json_headers[] = $k . ":" . $v;
         }
-        $inputJSON = file_get_contents(‘php://input’);
+        $inputJSON = file_get_contents('hp://input';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
