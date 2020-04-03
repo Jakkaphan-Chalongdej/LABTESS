@@ -30,7 +30,7 @@ if (sizeof($request_array['events']) > 0) {
         //$profile_array = json_decode($profile_json, true);
         //$pic_ = $profile_array[pictureUrl];
         //$name_ = $profile_array[displayName];
-        {
+        
         if ($event['message']['type'] == 'text') {
             $text = $event['message']['text'];
             //$userid = $event['source']['userId'];
@@ -92,6 +92,6 @@ if (sizeof($request_array['events']) > 0) {
             exit;
         }
      }
-  }
+  
 }
 ?>
