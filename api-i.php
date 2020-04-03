@@ -40,7 +40,7 @@ $context = stream_context_create($post);
     fclose($myfile); */
     /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
     $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
-    $url = "https://bots.dialogflow.com/line/ad06ac8974cd430a92915c843b49c0e3/webhook";
+    $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/29f0ffe2-835f-480d-8410-2351e7e5ff17";
     $headers = getallheaders();
     $headers['Host'] = "bots.dialogflow.com";
     $json_headers = array();
