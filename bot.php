@@ -25,6 +25,24 @@ if (!is_null($events['events'])) {
                 'replyToken' => $replyToken,
                 'messages' => [$messages]
             ];
+            if ($event['type'] == 'message' && $event['message']['type'] == 'sticker') {
+            // Get text sent
+            $text = $event['message']['sticker'];
+            // Get replyToken
+            $replyToken = $event['replyToken'];
+            // Build message to reply back
+            $messages = [
+                'type' => 'sticker',
+                'packageId' => 1,
+                "stickerId": "2576",
+               
+            ];
+            // Make a POST Request to Messaging API to reply to sender
+            $url = 'https://api.line.me/v2/bot/message/reply';
+            $data = [
+                'replyToken' => $replyToken,
+                'messages' => [$messages]
+            ];
             $post = json_encode($data);
             $headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
             $ch = curl_init($url);
