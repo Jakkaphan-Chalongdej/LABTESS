@@ -10,7 +10,7 @@ if (!is_null($events['events'])) {
     foreach ($events['events'] as $event) {
         // Reply only when message sent is in 'text' format
         if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
-            $url = "https://dialogflow.cloud.google.com/v1/integrations/line/29f0ffe2-835f-480d-8410-2351e7e5ff17/webhook";
+            $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/29f0ffe2-835f-480d-8410-2351e7e5ff17";
             $headers = getallheaders();
             $headers['Host'] = "bots.dialogflow.com";
             $json_headers = array();
