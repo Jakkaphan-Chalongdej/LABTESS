@@ -76,7 +76,7 @@ $context = stream_context_create($post);
         foreach ($headers as $k => $v) {
         $json_headers[] = $k . ":" . $v;
         }
-        $inputJSON = file_get_contents('hp://input';
+        $inputJSON = file_get_contents('hp://input');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
