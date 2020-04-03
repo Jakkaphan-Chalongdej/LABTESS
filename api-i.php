@@ -1,133 +1,97 @@
 <?php
-  $access_token = "/1H2Ob/D5/sXjHapP8eNz9WdUVcXnZcFhJcX9BLul3HK9bums95y9oJM315Js+v5BnPLSPHR8DzXLw/ME2cTWm6RDF1aCNyMiUpwvUec4WyPuAc71zWMl+Qy1iIaiHLTEE5TgVO7eZ+reDwt1dIt1QdB04t89/1O/w1cDnyilFU=";
-  $userId ='U09daf41b2443adfdfcbdfc3b3858f3eb';
-
-  // Call LINE API
-  $content = file_get_contents('php://input');
-  $events = json_decode($content, true); 
-
-  // Call Database Mysql
-  //$database = file_get_contents('http://35.198.246.124/dbtestbme/jsonline.php');
-  //$datas = json_decode($database, true);  
-
-  // Call Function GetName
-  function CallLineGetName($access_token,$userId){
-
-    $url = 'https://api.line.me/v2/bot/profile/'.$userId;
-    $headers = array('Authorization: Bearer ' .$access_token);
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    $result = curl_exec($ch);
-    curl_close($ch);
-    return $result;
-  }
-
-  $result = CallLineGetName($access_token,$userId);
-  $json = json_decode($result,TRUE); 
-
-  if(!is_null($json['displayName'])){
-
-    foreach ($json as $type => $value){
-      if($type == 'displayName'){
-          $Name = $value; // send reply text name gg
-      }
+    date_default_timezone_set(“Asia/Bangkok”);
+    $date_ = date(“Y-m-d”);
+    $time_ = date(“H:i:s”);
+    $serverName = “host”;
+    $userName = “username”;
+    $userPassword = “password”;
+    $dbName = “chatbot”;
+    $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die(“connect error” . mysqli_error());
+    mysqli_set_charset($connect, “utf8”);
+    $API_URL = ‘https://api.line.me/v2/bot/message/reply';
+    $ACCESS_TOKEN = ‘line_token’; // Access Token จาก Line developer
+    $POST_HEADER = array(‘Content-Type: application/json’, ‘Authorization: Bearer line_token’);
+    $request = file_get_contents(‘php://input’);
+    $request_array = json_decode($request, true);
+    if (sizeof($request_array[‘events’]) > 0) {
+    foreach ($request_array[‘events’] as $event) {
+    $reply_message = ‘’;
+    $reply_token = $event[‘replyToken’];
+    $user_id = $event[‘source’][‘userId’];
+    if ($event[‘type’] == ‘message’) {
+    $opts = [
+    “http” => [
+    “header” => “Content-Type: application/json\r\n” . ‘Authorization: Bearer line_token’,
+    ],
+  ];
+}
+$context = stream_context_create($opts);
+$profile_json = file_get_contents(‘https://api.line.me/v2/bot/profile/' . $user_id, false, $context);
+$profile_array = json_decode($profile_json, true);
+$pic_ = $profile_array[pictureUrl];
+$name_ = $profile_array[displayName];
+{
+    if ($event[‘message’][‘type’] == ‘text’) {
+    $text = $event[‘message’][‘text’];
+    $userid = $event[‘source’][‘userId’];
+    /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
+    $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
+    fwrite($myfile, $log);
+    fclose($myfile); */
+    $query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+    $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
+    $url = “https://bots.dialogflow.com/line/ad06ac8974cd430a92915c843b49c0e3/webhook";
+    $headers = getallheaders();
+    $headers[‘Host’] = “bots.dialogflow.com”;
+    $json_headers = array();
+    foreach ($headers as $k => $v) {
+    $json_headers[] = $k . “:” . $v;
     }
-  }
- 
-  // Call Database Mysql
-  if (!is_null($datas['id'])) {
-      foreach ($datas as $type => $value) {
-          if($type == 'id'){
-            $id = $value;
-          }elseif($type == 'temperature'){
-            $Temperature = $value;
-          }elseif($type == 'pressure') {
-            $Pressure = $value;
-          }elseif($type == 'approx') {
-            $Approx = $value;          
-          }elseif($type == 'humidity') {
-            $Humidity = $value;         
-          }elseif($type == 'datetime') {
-            $datetime = $value;       
-          }   
-      } 
-  }
-
-  // Call Events LINE API
-  if (!is_null($events['events'])) {
-    foreach ($events['events'] as $event) {
-      if ($event['type'] == 'message' && $event['message']['type'] == 'text'){
-          $text = $event['message']['text'];
-          if ($text == "สวัสดี"
-           or $text == "สวัสดีครับ" 
-           or $text == "open" 
-           or $text == "hi"
-           or $text == "Hi"
-          ){
-            $text = $text." คุณ ".$Name."\n สามารถเลือกเมนูได้เลยครับ ";
-          }elseif($text == "1"){
-            $text = "Temperature(อุณหภูมิ)ตอนนี้จะอยู่ที่ ".$Temperature." (°C) ครับ";
-          }elseif ($text == "2"){
-            $text = "Pressure(ความดัน)ตอนนี้จะอยู่ที่ ".$Pressure." (°Pa) ครับ";
-          }elseif ($text == "3"){
-            $text = " Approx. Altitude(ความสูงจากระดับน้ำทะเล)ตอนนี้จะอยู่ที่ ".$Approx." (°) ครับ";
-          }elseif ($text == "4"){
-            $text = "Humidity(ความชื้น)ตอนนี้จะอยู่ที่ ".$Humidity." (°) ครับ";
-          }elseif ($text == "5"){
-            $text = "วันที่/เวลา :".$datetime;
-          }else if($text == "6"){
-            $text = "อุณหภูมิ ตอนนี้จะอยู่ที่ ".$Temperature." (°C) ครับ \n
-            - ความดันอยู่ที่ ".$Pressure." (°F) ครับ\n 
-            - ความสูงจากระดับน้ำทะเล ตอนนี้จะอยู่ที่ ".$Approx." (°C) ครับ\n 
-            - ความชื้น ตอนนี้จะอยู่ที่ ".$Humidity." (°F) ครับ\n 
-            - อับเดจล่าสุดเมื่อวันที่ ".$datetime." ครับ";
-          }else if($text == "ใครสร้าง Mark I"){
-            $text ="Mark I ถูกสร้างโดย mr.mach ครับ";
-          }else{
-            $text = "ขอเวลาเรียนรู้ก่อนนะครับ :)";
-          }
-
-          $replyToken = $event['replyToken'];
-          $messages = [
-            'type' => 'text',
-            'text' => $text
-        ];
-      }elseif ($event['type'] == 'message' && $event['message']['type'] == 'sticker'){
-          $id = $event['message']['id'];
-          $stickerId = $event['message']['stickerId'];
-          $packageId = $event['message']['packageId'];
-
-          $replyToken = $event['replyToken'];
-          $messages = [
-            'type' => 'sticker',
-            'id' => $id,
-            'stickerId' => $stickerId,
-            'packageId' => $packageId      
-          ];
-      
-      }
-      // Make a POST Request to Messaging API to reply to sender
-      $url = 'https://api.line.me/v2/bot/message/reply';
-      $data = [
-        'replyToken' => $replyToken,
-        'messages' => [$messages],
-      ];
-      $post = json_encode($data);
-      $headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
-
-      $ch = curl_init($url);
-      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+      $inputJSON = file_get_contents(‘php://input’);
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
       $result = curl_exec($ch);
       curl_close($ch);
-
-      echo $result . "\r\n";
+      exit;
+      } else {
+        $text =”user send image location or sticker”;
+        /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
+        $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
+        fwrite($myfile, $log);
+        fclose($myfile); */
+        $query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+        $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
+        $url = “https://abdul.in.th/callback/2e31437050351d49f8befaa04ed296ed.php";
+        $headers = getallheaders();
+        $headers[‘Host’] = “abdul.in.th”;
+        $json_headers = array();
+        foreach ($headers as $k => $v) {
+        $json_headers[] = $k . “:” . $v;
+        }
+        $inputJSON = file_get_contents(‘php://input’);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        exit;
+      }
     }
   }
-  echo "sucess full";
+}
 ?>
