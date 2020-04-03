@@ -1,27 +1,27 @@
 <?php
-/*date_default_timezone_set(“Asia/Bangkok”);
-$date_ = date(“Y-m-d”);
-$time_ = date(“H:i:s”);
-$serverName = “host”;
-$userName = “username”;
-$userPassword = “password”;
-$dbName = “chatbot”;
-$connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die(“connect error” . mysqli_error());
-mysqli_set_charset($connect, “utf8”);*/
+/*date_default_timezone_set("Asia/Bangkok");
+$date_ = date("Y-m-d");
+$time_ = date("H:i:s");
+$serverName = "host";
+$userName = "username";
+$userPassword = "password";
+$dbName = "chatbot";
+$connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die("connect error" . mysqli_error());
+mysqli_set_charset($connect, "utf8");*/
 $API_URL = 'https://api.line.me/v2/bot/message/reply';
 $ACCESS_TOKEN = 'lhh5bqVWFDXPY+cPsIeJrf9vC06L4SesNGP2SkzJjCdSgawBODTHK5tSZWjPiBytVm3QAkbOq8RAsIonUVszGz6Ok02qnDGZLKAtF3ltP9shw7EdD1FimHhpM/AzI1Bjvhbf0zu0TqEgOO7dBmSG9QdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
-$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer'. $ACCESS_TOKEN);
+$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer $ACCESS_TOKEN');
 $request = file_get_contents('php://input');
 $request_array = json_decode($request, true);
 if (sizeof($request_array['events']) > 0) {
     foreach ($request_array['events'] as $event) {
         $reply_message = '';
         $reply_token = $event['replyToken'];
-        //$user_id = $event['source']['userId'];
+        $user_id = $event['source']['userId'];
         if ($event['type'] == 'message') {
             $post = [
                 "http" => [
-                    "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer'. $ACCESS_TOKEN,
+                    "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer $ACCESS_TOKEN',
                 ],
             ];
         }
@@ -33,14 +33,14 @@ if (sizeof($request_array['events']) > 0) {
         
         if ($event['message']['type'] == 'text') {
             $text = $event['message']['text'];
-            //$userid = $event['source']['userId'];
-            /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
-            $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
+            $userid = $event['source']['userId'];
+            /* $myfile = fopen("log_easy.txt", "a") or die("Unable to open file!");
+            $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
             fwrite($myfile, $log);
             fclose($myfile); */
-            /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+            /*$query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
             $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
-            $url = "https://dialogflow.cloud.google.com/v1/integrations/line/29f0ffe2-835f-480d-8410-2351e7e5ff17/webhook";
+            $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/29f0ffe2-835f-480d-8410-2351e7e5ff17";
             $headers = getallheaders();
             $headers['Host'] = "bots.dialogflow.com";
             $json_headers = array();
@@ -63,18 +63,18 @@ if (sizeof($request_array['events']) > 0) {
               exit;
         } else {
             $text ="user send image location or sticker";
-            /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
-            $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
+           /* $myfile = fopen("log_easy.txt", "a") or die("Unable to open file!");
+            $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
             fwrite($myfile, $log);
             fclose($myfile); */
-            /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+            /*$query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
             $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
             $url = "https://abdul.in.th/callback/2e31437050351d49f8befaa04ed296ed.php";
             $headers = getallheaders();
             $headers['Host'] = "abdul.in.th";
             $json_headers = array();
             foreach ($headers as $k => $v) {
-                $json_headers[] = $k . ":" . $v;
+                $json_headers[] = $k.":".$v;
             }
             $inputJSON = file_get_contents('php://input');
             $ch = curl_init();
@@ -91,7 +91,7 @@ if (sizeof($request_array['events']) > 0) {
             curl_close($ch);
             exit;
         }
-     }
+    }
   
 }
 ?>
