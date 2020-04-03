@@ -17,7 +17,7 @@ if (!is_null($events['events'])) {
             foreach ($headers as $k => $v) {
                 $json_headers[] = $k . ":" . $v;
             }
-            $url = 'https://api.line.me/v2/bot/message/reply';
+            //$url = 'https://api.line.me/v2/bot/message/reply';
             $data = [
                 'replyToken' => $replyToken,
                 'messages' => [$messages]
