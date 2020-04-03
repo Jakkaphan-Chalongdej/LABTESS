@@ -11,7 +11,7 @@
     $API_URL = 'https://api.line.me/v2/bot/message/reply';
     $ACCESS_TOKEN = 'lhh5bqVWFDXPY+cPsIeJrf9vC06L4SesNGP2SkzJjCdSgawBODTHK5tSZWjPiBytVm3QAkbOq8RAsIonUVszGz6Ok02qnDGZLKAtF3ltP9shw7EdD1FimHhpM/AzI1Bjvhbf0zu0TqEgOO7dBmSG9QdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
     $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer line_token');
-    $request = file_get_contents(‘php://input’);
+    $request = file_get_contents('php://input');
     $request_array = json_decode($request, true);
     if (sizeof($request_array['events']) > 0) {
     foreach ($request_array['events'] as $event) {
@@ -19,21 +19,21 @@
     $reply_token = $event['replyToken'];
     $user_id = $event['source']['userId'];
     if ($event['type'] == 'message') {
-    $opts = [
+    $post = [
     "http" => [
     "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer line_token',
     ],
   ];
 }
-$context = stream_context_create($opts);
-$profile_json = file_get_contents('https://api.line.me/v2/bot/profile/' . $user_id, false, $context);
-$profile_array = json_decode($profile_json, true);
-$pic_ = $profile_array[pictureUrl];
-$name_ = $profile_array[displayName];
+$context = stream_context_create($post);
+//$profile_json = file_get_contents('https://api.line.me/v2/bot/profile/' . $user_id, false, $context);
+//$profile_array = json_decode($profile_json, true);
+//$pic_ = $profile_array[pictureUrl];
+//$name_ = $profile_array[displayName];
 {
     if ($event['message']['type'] == 'text') {
     $text = $event['message']['text'];
-    $userid = $event['source']['userId'];
+    //$userid = $event['source']['userId'];
     /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
     $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
     fwrite($myfile, $log);
