@@ -20,8 +20,8 @@ if (sizeof($request_array['events']) > 0) {
         //$user_id = $event['source']['userId'];
         if ($event['type'] == 'message') {
             $post = [
-            "http" => [
-            "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer'. $ACCESS_TOKEN,
+                "http" => [
+                    "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer'. $ACCESS_TOKEN,
                 ],
             ];
         }
