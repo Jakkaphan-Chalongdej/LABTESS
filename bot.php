@@ -10,6 +10,8 @@ if (!is_null($events['events'])) {
     foreach ($events['events'] as $event) {
         // Reply only when message sent is in 'text' format
         if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+             $reply_message = $event['message']['text'];
+             $reply_token = $event['replyToken'];
             $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/29f0ffe2-835f-480d-8410-2351e7e5ff17";
             $headers = getallheaders();
             $headers['Host'] = "bots.dialogflow.com";
@@ -17,14 +19,8 @@ if (!is_null($events['events'])) {
             foreach ($headers as $k => $v) {
                 $json_headers[] = $k . ":" . $v;
             }
-            //$url = 'https://api.line.me/v2/bot/message/reply';
-            $data = [
-                'replyToken' => $replyToken,
-                'messages' => [$messages]
-            ];
-              $inputJSON = file_get_contents('php://input');
-              $post = json_encode($data);
-              $ch = curl_init($url);
+              $inputJSON = file_get_contents('php://input');           
+              $ch = curl_init();
               curl_setopt($ch, CURLOPT_URL, $url);
               curl_setopt($ch, CURLOPT_POST, 1);
               curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
@@ -37,9 +33,9 @@ if (!is_null($events['events'])) {
               $result = curl_exec($ch);
               curl_close($ch);
               exit;
-            
+           /* 
             // Get text sent
-            /*$text = $event['message']['text'];
+            $text = $event['message']['text'];
             // Get replyToken
             $replyToken = $event['replyToken'];
             // Build message to reply back
@@ -64,7 +60,7 @@ if (!is_null($events['events'])) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             $result = curl_exec($ch);
             curl_close($ch);
-            echo $result . "";   */        
+            echo $result . "";    */      
         }            
     }
 }
