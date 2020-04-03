@@ -25,7 +25,7 @@ if (!is_null($events['events'])) {
                 'replyToken' => $replyToken,
                 'messages' => [$messages]
             ];
-            if ($event['type'] == 'message' && $event['message']['type'] == 'sticker') {
+        }if ($event['type'] == 'message' && $event['message']['type'] == 'sticker') {
             // Get text sent
             $sticker = $event['message']['sticker'];
             // Get replyToken
@@ -42,6 +42,8 @@ if (!is_null($events['events'])) {
                 'replyToken' => $replyToken,
                 'messages' => [$messages]
             ];
+            
+        }
             $post = json_encode($data);
             $headers = array('Content-Type: application/json', 'Authorization: Bearer ' . $access_token);
             $ch = curl_init($url);
@@ -53,7 +55,6 @@ if (!is_null($events['events'])) {
             $result = curl_exec($ch);
             curl_close($ch);
             echo $result . "";
-        }
     }
 }
 echo "OK";
