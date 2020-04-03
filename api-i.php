@@ -21,7 +21,7 @@
     if ($event['type'] == 'message') {
     $post = [
     "http" => [
-    "header" => "Content-Type: application/json\r\n" . 'Authorization: Bearer line_token',
+    "header" => "Content-Type: application/json\r\n" , 'Authorization: Bearer line_token',
     ],
   ];
 }
