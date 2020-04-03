@@ -17,8 +17,14 @@ if (!is_null($events['events'])) {
             foreach ($headers as $k => $v) {
                 $json_headers[] = $k . ":" . $v;
             }
+            $url = 'https://api.line.me/v2/bot/message/reply';
+            $data = [
+                'replyToken' => $replyToken,
+                'messages' => [$messages]
+            ];
               $inputJSON = file_get_contents('php://input');
-              $ch = curl_init();
+              $post = json_encode($data);
+              $ch = curl_init($url);
               curl_setopt($ch, CURLOPT_URL, $url);
               curl_setopt($ch, CURLOPT_POST, 1);
               curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
