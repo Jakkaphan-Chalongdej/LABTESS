@@ -38,8 +38,8 @@ $name_ = $profile_array[displayName];
     $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
     fwrite($myfile, $log);
     fclose($myfile); */
-    $query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
-    $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
+    /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+    $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
     $url = “https://bots.dialogflow.com/line/ad06ac8974cd430a92915c843b49c0e3/webhook";
     $headers = getallheaders();
     $headers[‘Host’] = “bots.dialogflow.com”;
@@ -67,8 +67,8 @@ $name_ = $profile_array[displayName];
         $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
         fwrite($myfile, $log);
         fclose($myfile); */
-        $query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
-        $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
+        /*$query = “INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE (‘$user_id’,’$name_’,’$pic_’ ,’$text’,NOW())”;
+        $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
         $url = “https://abdul.in.th/callback/2e31437050351d49f8befaa04ed296ed.php";
         $headers = getallheaders();
         $headers[‘Host’] = “abdul.in.th”;
