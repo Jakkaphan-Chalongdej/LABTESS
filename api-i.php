@@ -9,7 +9,7 @@
     $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die(“connect error” . mysqli_error());
     mysqli_set_charset($connect, “utf8”);*/
     $API_URL = 'https://api.line.me/v2/bot/message/reply';
-    $ACCESS_TOKEN = 'AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
+    $ACCESS_TOKEN = 'lhh5bqVWFDXPY+cPsIeJrf9vC06L4SesNGP2SkzJjCdSgawBODTHK5tSZWjPiBytVm3QAkbOq8RAsIonUVszGz6Ok02qnDGZLKAtF3ltP9shw7EdD1FimHhpM/AzI1Bjvhbf0zu0TqEgOO7dBmSG9QdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
     $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer line_token');
     $request = file_get_contents(‘php://input’);
     $request_array = json_decode($request, true);
