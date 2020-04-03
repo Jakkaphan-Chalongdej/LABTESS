@@ -1,5 +1,5 @@
 <?php
-    date_default_timezone_set(“Asia/Bangkok”);
+    /*date_default_timezone_set(“Asia/Bangkok”);
     $date_ = date(“Y-m-d”);
     $time_ = date(“H:i:s”);
     $serverName = “host”;
@@ -7,7 +7,7 @@
     $userPassword = “password”;
     $dbName = “chatbot”;
     $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die(“connect error” . mysqli_error());
-    mysqli_set_charset($connect, “utf8”);
+    mysqli_set_charset($connect, “utf8”);*/
     $API_URL = ‘https://api.line.me/v2/bot/message/reply';
     $ACCESS_TOKEN = ‘line_token’; // Access Token จาก Line developer
     $POST_HEADER = array(‘Content-Type: application/json’, ‘Authorization: Bearer line_token’);
