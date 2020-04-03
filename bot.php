@@ -1,5 +1,5 @@
 <?php
-$access_token = 'AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU=';
+$access_token = 'lhh5bqVWFDXPY+cPsIeJrf9vC06L4SesNGP2SkzJjCdSgawBODTHK5tSZWjPiBytVm3QAkbOq8RAsIonUVszGz6Ok02qnDGZLKAtF3ltP9shw7EdD1FimHhpM/AzI1Bjvhbf0zu0TqEgOO7dBmSG9QdB04t89/1O/w1cDnyilFU=';
 // Get POST body content
 $content = file_get_contents('php://input');
 // Parse JSON
@@ -10,9 +10,30 @@ if (!is_null($events['events'])) {
     foreach ($events['events'] as $event) {
         // Reply only when message sent is in 'text' format
         if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
+            $url = "https://dialogflow.cloud.google.com/v1/integrations/line/29f0ffe2-835f-480d-8410-2351e7e5ff17/webhook";
+            $headers = getallheaders();
+            $headers['Host'] = "bots.dialogflow.com";
+            $json_headers = array();
+            foreach ($headers as $k => $v) {
+                $json_headers[] = $k . ":" . $v;
+            }
+              $inputJSON = file_get_contents('php://input');
+              $ch = curl_init();
+              curl_setopt($ch, CURLOPT_URL, $url);
+              curl_setopt($ch, CURLOPT_POST, 1);
+              curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+              curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
+              curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
+              curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+              curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+              curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+              curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+              $result = curl_exec($ch);
+              curl_close($ch);
+              exit;
             
             // Get text sent
-            $text = $event['message']['text'];
+            /*$text = $event['message']['text'];
             // Get replyToken
             $replyToken = $event['replyToken'];
             // Build message to reply back
@@ -37,7 +58,7 @@ if (!is_null($events['events'])) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             $result = curl_exec($ch);
             curl_close($ch);
-            echo $result . "";           
+            echo $result . "";   */        
         }            
     }
 }
