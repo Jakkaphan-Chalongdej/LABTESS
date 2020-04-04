@@ -8,11 +8,7 @@ app.get('/', (req, res) => {
     message: 'OK'
   })
 })
-app.get('/api-i.php', (req, res) =>  res.status(200){ 
-  res.json({
-    message: 'OK'
-  })
-})
+app.get('/api-i.php', (req, res) => res.status(200))
 app.get('*', (req, res) => {
   res.json({
     message: 'Error'
