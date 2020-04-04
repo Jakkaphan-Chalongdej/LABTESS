@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-const PORT = process.env.PORT || 3306
+const PORT = process.env.PORT || 9000
 
 app.get('/', (req, res) => {
   res.json({
