@@ -28,7 +28,7 @@ $uid = $deCode['events'][0]['source']['userId'];
 
 if ($type == 'text') {
 
-    $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/f53b38db-d98d-41d6-914c-86726c8e3485";
+    $url = "https://dialogflow.cloud.google.com/v1/integrations/line/f53b38db-d98d-41d6-914c-86726c8e3485/webhook";
     $headers = getallheaders();
     $headers['Host'] = "bots.dialogflow.com";
     $json_headers = array();
