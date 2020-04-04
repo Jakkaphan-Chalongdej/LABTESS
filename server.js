@@ -8,11 +8,6 @@ app.get('/', (req, res) => {
     message: 'OK'
   })
 })
-app.get('/api-i.php', (req, res) => {
-  res.json({
-    message: 'OK'
-  })
-})
 app.get('*', (req, res) => {
   res.json({
     message: 'Error'
