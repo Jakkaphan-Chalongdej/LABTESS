@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("Asia/Bangkok");
-$date_ = date("d-m-Y");
+$date_ = date("Y-m-d");
 $time_ = date("H:i:s");
 $serverName = "test1.csw86ar6olyd.us-west-2.rds.amazonaws.com";
 $userName = "admin";
@@ -34,10 +34,10 @@ if (sizeof($request_array['events']) > 0) {
         if ($event['message']['type'] == 'text') {
             $text = $event['message']['text'];
             $userid = $event['source']['userId'];
-            $myfile = fopen("log.txt", "a") or die("Unable to open file!");
-                $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
-                fwrite($myfile, $log);
-                fclose($myfile); 
+            /* $myfile = fopen("log.txt", "a") or die("Unable to open file!");
+            $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
+            fwrite($myfile, $log);
+            fclose($myfile); */
             $query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
             $resource = mysqli_query($connect, $query) or die("error" . mysqli_error());
             $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/f53b38db-d98d-41d6-914c-86726c8e3485";
@@ -63,10 +63,10 @@ if (sizeof($request_array['events']) > 0) {
             exit;
         } else {
                 $text ="user send image location or sticker";
-                $myfile = fopen("log.txt", "a") or die("Unable to open file!");
-                $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
-                    fwrite($myfile, $log);
-                    fclose($myfile); 
+                /* $myfile = fopen(“log_easy.txt”, “a”) or die(“Unable to open file!”);
+                $log = $userid . ‘-’ . $text . ‘-’ . $pic_ . ‘-’ . $name_ . ‘-’ . $date_ . ‘-’ . $time_;
+                fwrite($myfile, $log);
+                fclose($myfile); */
                 $query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
                 $resource = mysqli_query($connect, $query) or die("error" . mysqli_error());
                 $url = "https://abdul.in.th/callback/9b30aacdf0cd3dbcbdef08c1c948775b.php";
@@ -95,4 +95,3 @@ if (sizeof($request_array['events']) > 0) {
     }
 }
 ?>
-
