@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-</head>
-<body>
-	<h1>Welcome Heroku test Dialogflow and Abdul</h1>
-</body>
-</html>
-
 <?php
 date_default_timezone_set("Asia/Bangkok");
 $date_ = date("d-m-Y");
