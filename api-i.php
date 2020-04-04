@@ -11,15 +11,15 @@
 
 <?php
 
-/*date_default_timezone_set("Asia/Bangkok");
+date_default_timezone_set("Asia/Bangkok");
 $date_ = date("Y-m-d");
 $time_ = date("H:i:s");
-$serverName = "host";
-$userName = "username";
-$userPassword = "password";
-$dbName = "chatbot";
+$serverName = "test1.csw86ar6olyd.us-west-2.rds.amazonaws.com";
+$userName = "admin";
+$userPassword = "admin123456";
+$dbName = "testDB";
 $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die("connect error" . mysqli_error());
-mysqli_set_charset($connect, "utf8");*/
+mysqli_set_charset($connect, "utf8");
 $strUrl  = 'https://api.line.me/v2/bot/message/reply';
 $strAccessToken = 'AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
 $content = file_get_contents('php://input');
@@ -50,8 +50,8 @@ if (sizeof($arrJson['events']) > 0) {
             $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
             fwrite($myfile, $log);
             fclose($myfile); */
-            /*$query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
-            $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
+            $query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
+            $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
             $url = "https://dialogflow.cloud.google.com/v1/integrations/line/webhook/f53b38db-d98d-41d6-914c-86726c8e3485";
             $headers = getallheaders();
             $headers['Host'] = "bots.dialogflow.com";
@@ -80,8 +80,8 @@ if (sizeof($arrJson['events']) > 0) {
             $log = $userid . '-' . $text . '-' . $pic_ . '-' . $name_ . '-' . $date_ . '-' . $time_;
             fwrite($myfile, $log);
             fclose($myfile); */
-            /*$query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
-            $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());*/
+            $query = "INSERT INTO chatbot_log(user_id,name,pic,text,date_time) VALUE ('$user_id','$name_','$pic_' ,'$text',NOW())";
+            $resource = mysqli_query($connect, $query) or die(“error” . mysqli_error());
             $url = "https://abdul.in.th/callback/9b30aacdf0cd3dbcbdef08c1c948775b.php";
             $headers = getallheaders();
             $headers['Host'] = "abdul.in.th";
