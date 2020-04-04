@@ -10,7 +10,6 @@
 </html>
 
 <?php
-<?php
 date_default_timezone_set("Asia/Bangkok");
 $date_ = date("d-m-Y");
 $time_ = date("H:i:s");
