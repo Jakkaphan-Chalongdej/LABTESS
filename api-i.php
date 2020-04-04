@@ -49,20 +49,21 @@ if (sizeof($request_array['events']) > 0) {
             foreach ($headers as $k => $v) {
                 $json_headers[] = $k . ":" . $v;
             }
-              $inputJSON = file_get_contents('php://input');
-              $ch = curl_init();
-              curl_setopt($ch, CURLOPT_URL, $url);
-              curl_setopt($ch, CURLOPT_POST, 1);
-              curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-              curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
-              curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
-              curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-              curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-              curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-              curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-              $result = curl_exec($ch);
-              curl_close($ch);
-              exit;
+            $inputJSON = file_get_contents('php://input');
+            //ch-->channel
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $strUrl);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            exit;
         } else {
             $text ="user send image location or sticker";
            /* $myfile = fopen("log_easy.txt", "a") or die("Unable to open file!");
@@ -79,12 +80,13 @@ if (sizeof($request_array['events']) > 0) {
                 $json_headers[] = $k.":".$v;
             }
             $inputJSON = file_get_contents('php://input');
+            //ch-->channel
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_URL, $strUrl);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
