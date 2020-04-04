@@ -20,15 +20,13 @@ $connect = mysqli_connect($serverName, $userName, $userPassword, $dbName) or die
 mysqli_set_charset($connect, "utf8");*/
 $strUrl  = 'https://api.line.me/v2/bot/message/reply';
 $strAccessToken = 'AJeYHUJbVy6d/VeCU+yJ7ShyCtmMl8yUv1LJPjDGFjIvSTBDgBtYp/0/VX6QJtONwP1CLuWMZCsAIb7ZI4JPPe2FADwvipoxDrpqBqypvBZ47D9vvObZ0C4oXgc8pnIHTpxc/TtDAdy+2swhHhD5wgdB04t89/1O/w1cDnyilFU='; // Access Token จาก Line developer
-//$POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ');
 $content = file_get_contents('php://input');
 $arrJson = json_decode($content, true);
-$arrHeader = array();
-$arrHeader[] = "Content-Type: application/json";
-$arrHeader[] = "Authorization: Bearer {$strAccessToken}";
-if (sizeof($request_array['events']) > 0) {
-    foreach ($request_array['events'] as $event) { 
-        $text = $event['message']['text'];
+$POST_HEADER = array("Content-Type: application/json"."Authorization: Bearer {$strAccessToken}");
+if (sizeof($arrJson['events']) > 0) {
+    foreach ($arrJson['events'] as $event) { 
+        $reply_message = '';
+	$reply_token = $event['replyToken'];
         $user_id = $event['source']['userId'];
         if ($event['type'] == 'message') {
             $opts = [
@@ -66,7 +64,7 @@ if (sizeof($request_array['events']) > 0) {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -96,7 +94,7 @@ if (sizeof($request_array['events']) > 0) {
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $inputJSON);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $json_headers);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
