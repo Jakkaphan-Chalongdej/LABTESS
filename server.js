@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
   })
 })
 app.get('/api-i.php', (req, res) => {
+  req.status(200)
   res.json({
     message: 'OK'
   })
