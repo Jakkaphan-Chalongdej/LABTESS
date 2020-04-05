@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 })
 app.get('/api-i.php', (req, res) => {
   res.json({
-    message: 'OK'
+    message: 'OK','OK','OK','OK'
   })
 })
 app.get('*', (req, res) => {
